@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pyramid
+* source:	https://sketchfab.com/3d-models/pyramid-ea75703274224e15bb93ab46e3e05d6b
+* author:	local.yany (https://sketchfab.com/local.yany)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pyramid" (https://sketchfab.com/3d-models/pyramid-ea75703274224e15bb93ab46e3e05d6b) by local.yany (https://sketchfab.com/local.yany) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

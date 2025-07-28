@@ -1,0 +1,567 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        2268.8310546875,
+        2459.98095703125,
+        2268.528076171875
+      ],
+      "min": [
+        -2268.83203125,
+        -0.4466705322265625,
+        -2268.531982421875
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 786384,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        0.9999994039535522,
+        1.0,
+        0.9999902248382568
+      ],
+      "min": [
+        -0.9999935030937195,
+        -1.0,
+        -0.999996542930603
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        2.974771022796631,
+        3.182291030883789
+      ],
+      "min": [
+        -1.9536869525909424,
+        -2.179469108581543
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 181470,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        2061.375,
+        2448.492919921875,
+        2061.450927734375
+      ],
+      "min": [
+        -2050.263916015625,
+        15.864940643310547,
+        -2041.8599853515625
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2359152,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        0.9999977350234985,
+        0.9999996423721313,
+        0.9999961256980896
+      ],
+      "min": [
+        -0.9999961853027344,
+        -0.9999998807907104,
+        -0.9999986290931702
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 524256,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        2.748568058013916,
+        3.1693859100341797
+      ],
+      "min": [
+        -1.7479480504989624,
+        -2.1707420349121094
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 725880,
+      "componentType": 5125,
+      "count": 145020,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 3145536,
+      "componentType": 5126,
+      "count": 51148,
+      "max": [
+        2268.8310546875,
+        2447.77099609375,
+        2268.530029296875
+      ],
+      "min": [
+        -2268.833984375,
+        -37.556880950927734,
+        -2268.52490234375
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 3759312,
+      "componentType": 5126,
+      "count": 51148,
+      "max": [
+        0.9999999403953552,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -0.9999999403953552,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1048512,
+      "componentType": 5126,
+      "count": 51148,
+      "max": [
+        2.974771022796631,
+        3.1482040882110596
+      ],
+      "min": [
+        -2.4871490001678467,
+        -2.4871459007263184
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1305960,
+      "componentType": 5125,
+      "count": 89964,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 4373088,
+      "componentType": 5126,
+      "count": 60916,
+      "max": [
+        2061.9130859375,
+        2354.868896484375,
+        2058.083984375
+      ],
+      "min": [
+        -2061.971923828125,
+        16.265888214111328,
+        -2049.674072265625
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 5104080,
+      "componentType": 5126,
+      "count": 60916,
+      "max": [
+        0.9999932646751404,
+        0.9999996423721313,
+        0.9999920725822449
+      ],
+      "min": [
+        -0.9999927282333374,
+        -0.9999995827674866,
+        -0.9999985694885254
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1457696,
+      "componentType": 5126,
+      "count": 60916,
+      "max": [
+        2.749073028564453,
+        3.06809401512146
+      ],
+      "min": [
+        -1.749137043952942,
+        -2.06809401512146
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1665816,
+      "componentType": 5125,
+      "count": 132246,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 5835072,
+      "componentType": 5126,
+      "count": 61053,
+      "max": [
+        2024.1300048828125,
+        2429.510986328125,
+        2057.555908203125
+      ],
+      "min": [
+        -2059.10009765625,
+        15.693389892578125,
+        -2052.27490234375
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 6567708,
+      "componentType": 5126,
+      "count": 61053,
+      "max": [
+        0.9999997615814209,
+        0.9999986886978149,
+        0.9999990463256836
+      ],
+      "min": [
+        -0.9999997615814209,
+        -0.999999463558197,
+        -0.999997079372406
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1945024,
+      "componentType": 5126,
+      "count": 61053,
+      "max": [
+        2.740525007247925,
+        3.148581027984619
+      ],
+      "min": [
+        -1.7445299625396729,
+        -2.1482040882110596
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 2194800,
+      "componentType": 5125,
+      "count": 132342,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "local.yany (https://sketchfab.com/local.yany)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/pyramid-ea75703274224e15bb93ab46e3e05d6b",
+      "title": "Pyramid"
+    },
+    "generator": "Sketchfab-16.16.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 2724168,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2433448,
+      "byteOffset": 2724168,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7300344,
+      "byteOffset": 5157616,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 12457960,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Sandstone01_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/Sandstone03_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/Sandstone02_baseColor.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Sandstone01",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.9577051494623774
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Sandstone03",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.9577051494623774
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Sandstone02",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.9577051494623774
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Pyramid03.Shape_Sandstone01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Pyramid03.Shape_Sandstone01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Pyramid03.Shape_Sandstone01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Pyramid03.Shape_Sandstone03_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Pyramid03.Shape_Sandstone02_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 17,
+            "POSITION": 16,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Pyramid.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "Pyramid03"
+    },
+    {
+      "children": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "name": "Pyramid03.Shape"
+    },
+    {
+      "mesh": 0,
+      "name": "Pyramid03.Shape_Sandstone01_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Pyramid03.Shape_Sandstone01_0"
+    },
+    {
+      "mesh": 2,
+      "name": "Pyramid03.Shape_Sandstone01_0"
+    },
+    {
+      "mesh": 3,
+      "name": "Pyramid03.Shape_Sandstone03_0"
+    },
+    {
+      "mesh": 4,
+      "name": "Pyramid03.Shape_Sandstone02_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}

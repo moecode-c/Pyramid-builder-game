@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pyramid Builder Simple</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.152.2/build/three.module.js",
+        "three/examples/jsm/controls/PointerLockControls.js": "https://unpkg.com/three@0.152.2/examples/jsm/controls/PointerLockControls.js",
+        "three/examples/jsm/utils/BufferGeometryUtils.js": "https://unpkg.com/three@0.152.2/examples/jsm/utils/BufferGeometryUtils.js"
+      }
+    }
+  </script>
+</head>
+<body>
+<div id="startScreen" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background:radial-gradient(ellipse at center,#222 60%,#111 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+  <div>
+    <div style="font-family:'Impact',sans-serif;font-size:3.5rem;color:#ffe066;text-shadow:0 4px 24px #000,0 1px 0 #fff;letter-spacing:2px;margin-bottom:2.5rem;">Pyramid Builder</div>
+    <h3 style="color:#fff;font-family:'Arial',sans-serif;text-align:center;max-width:600px;">Pyramid Builder is an exciting game where you construct ancient pyramids using various materials and strategies.</h3>
+  </div>
+  <button id="startButton" style="padding:1.2rem 3.5rem;font-size:2rem;font-family:'Arial Black',sans-serif;background:linear-gradient(90deg,#ffe066,#ffd700 80%);border:none;border-radius:1.5rem;box-shadow:0 2px 16px #0008;cursor:pointer;transition:transform 0.1s;">Start</button>
+</div>
+<div id="instructions" style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.6);color:white;padding:10px;border-radius:5px;z-index:10;pointer-events:none;">Click to play. WASD to move, mouse to look. 🖱️ Left-click: Place block | 🖱️ Right-click: Remove block | Space to fly UP | Shift to fly DOWN</div>
+<div id="crosshair" style="position:fixed;top:50%;left:50%;width:32px;height:32px;margin-left:-16px;margin-top:-16px;z-index:20;pointer-events:none;"></div>
+<div id="hotbar" style="position:fixed;left:16px;bottom:16px;display:flex;gap:8px;z-index:30;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);"></div>
+<script type="module" src="main.js"></script>
+</body>
+</html>
