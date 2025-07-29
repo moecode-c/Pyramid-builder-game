@@ -1,120 +1,123 @@
-import * as THREE from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import * as THREE from 'three'; // Import the main Three.js library for 3D rendering
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js'; // Import controls for first-person movement
+import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'; // Import utility for merging geometries
 
-let scene, camera, renderer, controls;
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-const blockSize = 1;
-const PLANE_MIN = -30, PLANE_MAX = 30;
-const blocks = [];
-let floorBlocks = [];
-let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
-let flyUp = false, flyDown = false;
-let direction = new THREE.Vector3();
-const speed = 6.0;
-let prevTime = performance.now();
+let scene, camera, renderer, controls; // Declare global variables for the scene, camera, renderer, and controls
+const raycaster = new THREE.Raycaster(); // Create a raycaster for detecting intersections
+const mouse = new THREE.Vector2(); // Create a vector to store mouse coordinates
+const blockSize = 1; // Define the size of each block
+const PLANE_MIN = -30, PLANE_MAX = 30; // Define the boundaries of the ground plane
+const blocks = []; // Array to store placed blocks
+let floorBlocks = []; // Array to store floor blocks
+let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false; // Movement flags
+let flyUp = false, flyDown = false; // Flags for vertical movement
+let direction = new THREE.Vector3(); // Vector to store movement direction
+const speed = 6.0; // Movement speed
+let prevTime = performance.now(); // Store the previous timestamp for calculating delta time
 
 // Load textures
-const textureLoader = new THREE.TextureLoader();
-const sandTexture = textureLoader.load('model/textures/Sandstone01_baseColor.jpeg');
-const stoneTexture = textureLoader.load('model/textures/Sandstone02_baseColor.jpeg');
-const stairsTexture = textureLoader.load('model/textures/Sandstone03_baseColor.jpeg');
+const textureLoader = new THREE.TextureLoader(); // Create a texture loader
+const sandTexture = textureLoader.load('model/textures/Sandstone01_baseColor.jpeg'); // Load sand texture
+const stoneTexture = textureLoader.load('model/textures/Sandstone02_baseColor.jpeg'); // Load stone texture
+const stairsTexture = textureLoader.load('model/textures/Sandstone03_baseColor.jpeg'); // Load stairs texture
 
+// Define the different types of blocks available in the game
 const BLOCK_TYPES = [
-  { name: 'Sand', color: 0xF7E9A0, map: sandTexture },
-  { name: 'Stone', color: 0x888888, map: stoneTexture },
-  { name: 'Grass', color: 0x4CAF50 },
-  { name: 'Wood', color: 0x8B5A2B, map: sandTexture },
-  { name: 'Glass', color: 0x99e6ff, transparent: true, opacity: 0.4 },
-  { name: 'Sandstone Stairs', color: 0xF7E9A0, isStairs: true, map: stairsTexture }
+  { name: 'Sand', color: 0xF7E9A0, map: sandTexture }, // Sand block type
+  { name: 'Stone', color: 0x888888, map: stoneTexture }, // Stone block type
+  { name: 'Grass', color: 0x4CAF50 }, // Grass block type
+  { name: 'Wood', color: 0x8B5A2B, map: sandTexture }, // Wood block type
+  { name: 'Glass', color: 0x99e6ff, transparent: true, opacity: 0.4 }, // Glass block type
+  { name: 'Sandstone Stairs', color: 0xF7E9A0, isStairs: true, map: stairsTexture } // Sandstone stairs block type
 ];
-let selectedBlockType = 0;
+let selectedBlockType = 0; // Index of the currently selected block type
 
-let rightHand = null, rightHandBlock = null;
+let rightHand = null, rightHandBlock = null; // Variables for the player's right hand and block preview
+// Create a block preview in the player's right hand
 function createRightHandBlock() {
-  if (!rightHand) return;
+  if (!rightHand) return; // Exit if the right hand is not initialized
   if (rightHandBlock) {
-    rightHandBlock.geometry.dispose();
-    rightHandBlock.material.dispose();
-    rightHand.remove(rightHandBlock);
+    rightHandBlock.geometry.dispose(); // Dispose of the previous block geometry
+    rightHandBlock.material.dispose(); // Dispose of the previous block material
+    rightHand.remove(rightHandBlock); // Remove the previous block from the right hand
   }
-  const type = BLOCK_TYPES[selectedBlockType];
-  let geometry = type.isStairs ? createStairsGeometry() : new THREE.BoxGeometry(0.18, 0.18, 0.18);
+  const type = BLOCK_TYPES[selectedBlockType]; // Get the selected block type
+  // Create geometry based on block type
+  let geometry = type.isStairs ? createStairsGeometry() : new THREE.BoxGeometry(0.18, 0.18, 0.18); 
   const matOptions = {
-    color: type.color,
-    flatShading: true,
-    transparent: type.transparent || false,
-    opacity: type.opacity !== undefined ? type.opacity : 1.0
+    color: type.color, // Set block color
+    flatShading: true, // Enable flat shading
+    transparent: type.transparent || false, // Set transparency
+    opacity: type.opacity !== undefined ? type.opacity : 1.0 // Set opacity
   };
-  if (type.map) matOptions.map = type.map;
-  const material = new THREE.MeshStandardMaterial(matOptions);
-  rightHandBlock = new THREE.Mesh(geometry, material);
-  rightHandBlock.position.set(0, 0.18, 0);
-  if (type.isStairs) rightHandBlock.scale.set(0.18, 0.18, 0.18);
-  rightHandBlock.castShadow = true;
-  rightHandBlock.receiveShadow = true;
-  rightHand.add(rightHandBlock);
+  if (type.map) matOptions.map = type.map; // Apply texture map if available
+  const material = new THREE.MeshStandardMaterial(matOptions); // Create material for the block
+  rightHandBlock = new THREE.Mesh(geometry, material); // Create the block mesh
+  rightHandBlock.position.set(0, 0.18, 0); // Position the block in the right hand
+  if (type.isStairs) rightHandBlock.scale.set(0.18, 0.18, 0.18); // Scale stairs block
+  rightHandBlock.castShadow = true; // Enable shadow casting
+  rightHandBlock.receiveShadow = true; // Enable shadow receiving
+  rightHand.add(rightHandBlock); // Add the block to the right hand
 }
 // Stairs rotation state (0: 0deg, 1: 90deg, 2: 180deg, 3: 270deg)
-let stairsRotation = 0;
+let stairsRotation = 0; // Variable to track stairs rotation
 
 // Start screen logic: wait for user to press Start before initializing the game
 window.addEventListener('DOMContentLoaded', () => {
-  const startScreen = document.getElementById('startScreen');
-  const startButton = document.getElementById('startButton');
+  const startScreen = document.getElementById('startScreen'); // Get the start screen element
+  const startButton = document.getElementById('startButton'); // Get the start button element
   if (startScreen && startButton) {
     startButton.addEventListener('click', () => {
-      startScreen.classList.add('fade-out');
+      startScreen.classList.add('fade-out'); // Add fade-out animation to the start screen
       setTimeout(() => {
-        startScreen.style.display = 'none';
+        startScreen.style.display = 'none'; // Hide the start screen after animation
       }, 500);
-      init();
-      animate();
+      init(); // Initialize the game
+      animate(); // Start the animation loop
     });
   } else {
     // Fallback: if start screen elements are missing, start game immediately
-    init();
-    animate();
+    init(); // Initialize the game
+    animate(); // Start the animation loop
   }
 });
 
 // Ensure hoverMesh is added to the scene during initialization
 function init() {
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x87CEEB); // Sky blue
+  scene = new THREE.Scene(); // Create the scene
+  scene.background = new THREE.Color(0x87CEEB); // Set the background color to sky blue
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(5, 3, 10);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Create the camera
+  camera.position.set(5, 3, 10); // Set the initial camera position
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  document.body.appendChild(renderer.domElement);
+  renderer = new THREE.WebGLRenderer({ antialias: true }); // Create the renderer with antialiasing
+  renderer.setSize(window.innerWidth, window.innerHeight); // Set the renderer size to match the window
+  renderer.shadowMap.enabled = true; // Enable shadow mapping
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Set shadow map type
+  document.body.appendChild(renderer.domElement); // Add the renderer to the document
 
-  controls = new PointerLockControls(camera, renderer.domElement);
-  scene.add(controls.getObject());
+  controls = new PointerLockControls(camera, renderer.domElement); // Create first-person controls
+  scene.add(controls.getObject()); // Add the controls object to the scene
 
   document.body.addEventListener('click', () => {
-    controls.lock();
+    controls.lock(); // Lock the controls on click
   });
 
   // Add hover mesh for placement preview
-  const hoverGeometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-  const hoverMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00, transparent: true, opacity: 0.4 });
-  hoverMesh = new THREE.Mesh(hoverGeometry, hoverMaterial);
-  hoverMesh.visible = false;
-  hoverMesh.castShadow = false;
-  hoverMesh.receiveShadow = false;
-  scene.add(hoverMesh);
+  const hoverGeometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize); // Create geometry for hover mesh
+  const hoverMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00, transparent: true, opacity: 0.4 }); // Create material for hover mesh
+  hoverMesh = new THREE.Mesh(hoverGeometry, hoverMaterial); // Create the hover mesh
+  hoverMesh.visible = false; // Hide the hover mesh initially
+  hoverMesh.castShadow = false; // Disable shadow casting
+  hoverMesh.receiveShadow = false; // Disable shadow receiving
+  scene.add(hoverMesh); // Add the hover mesh to the scene
 
   // Add a big temple at the opposite side of the pyramids
-  const templeX = PLANE_MIN - 30;
-  const templeZ = 0;
-  const templeWidth = 15;
-  const templeDepth = 11;
-  const templeHeight = 7;
+  const templeX = PLANE_MIN - 30; // X-coordinate of the temple
+  const templeZ = 0; // Z-coordinate of the temple
+  const templeWidth = 15; // Width of the temple
+  const templeDepth = 11; // Depth of the temple
+  const templeHeight = 7; // Height of the temple
   // Temple base (sand blocks)
   for (let tx = -Math.floor(templeWidth/2); tx <= Math.floor(templeWidth/2); tx++) {
     for (let tz = -Math.floor(templeDepth/2); tz <= Math.floor(templeDepth/2); tz++) {
@@ -126,10 +129,10 @@ function init() {
           map: BLOCK_TYPES[0].map
         })
       );
-      baseBlock.position.set(templeX + tx, 0, templeZ + tz);
-      baseBlock.castShadow = false;
-      baseBlock.receiveShadow = false;
-      scene.add(baseBlock);
+      baseBlock.position.set(templeX + tx, 0, templeZ + tz); // Position the base block
+      baseBlock.castShadow = false; // Disable shadow casting
+      baseBlock.receiveShadow = false; // Disable shadow receiving
+      scene.add(baseBlock); // Add the base block to the scene
     }
   }
   // Temple columns (front and back rows)
@@ -324,18 +327,19 @@ function init() {
     document.getElementById('instructions').style.display = '';
   });
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  let sun = new THREE.PointLight(0xffffff, 0.8);
-  sun.position.set(10, 10, 10);
-  sun.castShadow = true;
-  sun.shadow.mapSize.width = 1024;
-  sun.shadow.mapSize.height = 1024;
-  sun.shadow.camera.near = 1;
-  sun.shadow.camera.far = 50;
-  scene.add(sun);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6)); // Add ambient light to the scene
+  let sun = new THREE.PointLight(0xffffff, 0.8); // Create a point light to simulate the sun
+  sun.position.set(10, 10, 10); // Set the sun position
+  sun.castShadow = true; // Enable shadow casting for the sun
+  sun.shadow.mapSize.width = 1024; // Set shadow map width
+  sun.shadow.mapSize.height = 1024; // Set shadow map height
+  sun.shadow.camera.near = 1; // Set near clipping plane for shadow camera
+  sun.shadow.camera.far = 50; // Set far clipping plane for shadow camera
+  scene.add(sun); // Add the sun to the scene
 
   // Ground (floor) - larger area
-  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xE5D8B0, flatShading: true }); // Light sand
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xE5D8B0, flatShading: true }); // Light sand material
+  // Create a grid of floor blocks covering the entire plane
   for (let x = PLANE_MIN; x < PLANE_MAX; x++) {
     for (let z = PLANE_MIN; z < PLANE_MAX; z++) {
       const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
@@ -380,6 +384,7 @@ function init() {
   const previewMaterial = new THREE.MeshStandardMaterial({ color: 0xC2B280, opacity: 0.5, transparent: true });
   const pyramidCenterX = 0;
   const pyramidCenterZ = 10;
+  // Create a pyramid shape using nested cubes
   for (let y = 0; y < pyramidHeight; y++) {
     const size = pyramidBase - y * 2;
     for (let x = 0; x < size; x++) {
@@ -463,6 +468,7 @@ function init() {
 // Restored critical sections for hoverMesh, animate, and onClick logic
 // Restored hoverMesh logic for placement preview
 let hoverMesh = null;
+// Update the material properties of the hover mesh based on the selected block type
 function updateHoverMeshMaterial() {
   const type = BLOCK_TYPES[selectedBlockType];
   hoverMesh.material.color.setHex(type.color);
@@ -473,13 +479,13 @@ function updateHoverMeshMaterial() {
       hoverMesh.geometry.dispose();
       hoverMesh.geometry = createStairsGeometry();
     }
-    hoverMesh.rotation.y = stairsRotation * Math.PI / 2;
+    hoverMesh.rotation.y = stairsRotation * Math.PI / 2; // Correctly update rotation based on stairsRotation
   } else {
     if (!(hoverMesh.geometry && hoverMesh.geometry.type === 'BoxGeometry')) {
       hoverMesh.geometry.dispose();
       hoverMesh.geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
     }
-    hoverMesh.rotation.y = 0;
+    hoverMesh.rotation.y = 0; // Reset rotation for non-stairs blocks
   }
 }
 
@@ -573,6 +579,7 @@ function setSelectedBlockType(idx) {
   createRightHandBlock();
 }
 
+// Handle keyboard input for movement and actions
 function onKeyDown(event) {
   switch (event.code) {
     case 'Digit1': setSelectedBlockType(0); break;
@@ -589,10 +596,9 @@ function onKeyDown(event) {
     case 'ShiftLeft':
     case 'ShiftRight': flyDown = true; break;
     case 'KeyR':
-      // Only rotate if stairs is selected
       if (BLOCK_TYPES[selectedBlockType].isStairs) {
-        stairsRotation = (stairsRotation + 1) % 4;
-        updateHoverMeshMaterial();
+        stairsRotation = (stairsRotation + 1) % 4; // Increment rotation state and loop back to 0 after 3
+        updateHoverMeshMaterial(); // Update hover mesh to reflect new rotation
       }
       break;
   }
@@ -610,6 +616,7 @@ function onKeyUp(event) {
 }
 
 // Restored missing renderHotbar function
+// Render the hotbar UI element showing the available block types
 function renderHotbar() {
   const hotbar = document.getElementById('hotbar');
   hotbar.innerHTML = '';
@@ -637,6 +644,7 @@ function renderHotbar() {
 }
 
 // Restored missing createStairsGeometry function
+// Create the geometry for stairs blocks using merged box geometries
 function createStairsGeometry() {
   const stairGeo = new THREE.BufferGeometry();
   const stepGeo = new THREE.BoxGeometry(blockSize, blockSize / 4, blockSize / 4);
@@ -656,6 +664,7 @@ function createStairsGeometry() {
 // Define the missing addBlock function to handle block placement.
 function addBlock(x, y, z, typeIndex) {
   const type = BLOCK_TYPES[typeIndex];
+  // Create geometry and material for the new block
   const geometry = type.isStairs ? createStairsGeometry() : new THREE.BoxGeometry(blockSize, blockSize, blockSize);
   const materialOptions = {
     color: type.color,
@@ -666,11 +675,15 @@ function addBlock(x, y, z, typeIndex) {
   if (type.map) materialOptions.map = type.map;
   const material = new THREE.MeshStandardMaterial(materialOptions);
 
-  const block = new THREE.Mesh(geometry, material);
-  block.position.set(x, y, z);
+  const block = new THREE.Mesh(geometry, material); // Create the block mesh
+  block.position.set(x, y, z); // Position the block in the world
   block.castShadow = true;
   block.receiveShadow = true;
 
-  scene.add(block);
-  blocks.push(block);
+  if (type.isStairs) {
+    block.rotation.y = stairsRotation * Math.PI / 2; // Apply rotation to stairs
+  }
+
+  scene.add(block); // Add the block to the scene
+  blocks.push(block); // Add the block to the blocks array
 }
